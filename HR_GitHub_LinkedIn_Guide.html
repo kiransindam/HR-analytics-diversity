@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub + LinkedIn Pro Guide · HR Analytics D&I Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1117;
+    --card: #161b27;
+    --card2: #1c2333;
+    --border: #2a3347;
+    --text: #dde4f0;
+    --muted: #6b7a99;
+    --accent: #4f8ef7;
+    --gold: #f5c842;
+    --green: #2dd4a0;
+    --rose: #f4637d;
+    --purple: #a78bfa;
+    --li-blue: #0a66c2;
+    --li-dark: #004182;
+    --gh-dark: #161b22;
+    --gh-border: #30363d;
+    --gh-green: #3fb950;
+    --gh-blue: #58a6ff;
+    --gh-text: #e6edf3;
+    --gh-muted: #8b949e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ink);
+    color: var(--text);
+    line-height: 1.72;
+    font-size: 15px;
+  }
+
+  /* ═══ HERO ═══════════════════════════════════════════════════════ */
+  .hero {
+    min-height: 92vh;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-noise {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 100% 70% at 50% 0%, rgba(79,142,247,0.14) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 50% at 15% 85%, rgba(45,212,160,0.09) 0%, transparent 45%),
+      radial-gradient(ellipse 50% 40% at 85% 75%, rgba(245,200,66,0.07) 0%, transparent 40%);
+  }
+  .hero-dots {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .hero-inner { position: relative; max-width: 860px; }
+
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(79,142,247,0.1);
+    border: 1px solid rgba(79,142,247,0.25);
+    color: #93c5fd;
+    font-size: 0.71rem; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.38rem 1.1rem; border-radius: 40px;
+    margin-bottom: 1.8rem;
+    animation: rise 0.7s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    line-height: 0.9;
+    letter-spacing: 0.03em;
+    margin-bottom: 1.2rem;
+    animation: rise 0.7s ease 0.1s both;
+  }
+  .hero-title .line1 { display: block; color: var(--text); }
+  .hero-title .line2 { display: block; color: var(--gold); }
+  .hero-title .line3 { display: block; color: var(--accent); font-size: 0.7em; }
+
+  .hero-sub {
+    font-size: 1.05rem; color: var(--muted);
+    max-width: 560px; margin: 0 auto 2.5rem;
+    animation: rise 0.7s ease 0.2s both;
+  }
+
+  .hero-chips {
+    display: flex; gap: 0.75rem; justify-content: center;
+    flex-wrap: wrap;
+    animation: rise 0.7s ease 0.3s both;
+  }
+  .chip {
+    display: flex; align-items: center; gap: 0.4rem;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.82rem; font-weight: 500;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+  .chip-icon { font-size: 1rem; }
+
+  /* ═══ STICKY NAV ════════════════════════════════════════════════ */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,17,23,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    height: 52px;
+    display: flex; align-items: center;
+    padding: 0 1.5rem; gap: 0;
+    overflow-x: auto;
+  }
+  .nav-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 0.06em;
+    color: var(--gold);
+    margin-right: auto; white-space: nowrap;
+    padding-right: 1rem;
+  }
+  .nav a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0 0.85rem; height: 52px;
+    display: flex; align-items: center;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .nav a:hover { color: var(--text); border-bottom-color: var(--accent); }
+
+  /* ═══ SECTIONS ══════════════════════════════════════════════════ */
+  .section {
+    max-width: 920px; margin: 0 auto;
+    padding: 5rem 1.8rem;
+  }
+  .section + .section { border-top: 1px solid var(--border); }
+
+  .eyebrow {
+    font-size: 0.69rem; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--green); margin-bottom: 0.5rem;
+  }
+  .eyebrow.gold { color: var(--gold); }
+  .eyebrow.blue { color: var(--accent); }
+  .eyebrow.rose { color: var(--rose); }
+
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    font-weight: 700; line-height: 1.2;
+    margin-bottom: 0.7rem;
+  }
+  .section-desc { color: var(--muted); margin-bottom: 2.5rem; font-size: 0.94rem; max-width: 700px; }
+
+  /* ═══ STEP FLOW ═════════════════════════════════════════════════ */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: grid; grid-template-columns: 56px 1fr;
+    gap: 0 1.4rem;
+    padding-bottom: 2.2rem;
+    position: relative;
+  }
+  .step:last-child { padding-bottom: 0; }
+
+  .step-left {
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .step-orb {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.88rem; font-weight: 500;
+    flex-shrink: 0;
+    border: 2px solid;
+  }
+  .step-orb.gh { background: rgba(63,185,80,0.08); border-color: rgba(63,185,80,0.3); color: var(--gh-green); }
+  .step-orb.li { background: rgba(10,102,194,0.1); border-color: rgba(10,102,194,0.3); color: #93c5fd; }
+  .step-line {
+    flex: 1; width: 2px; background: var(--border);
+    margin-top: 0.4rem; min-height: 28px;
+  }
+  .step:last-child .step-line { display: none; }
+
+  .step-body { padding-top: 0.5rem; }
+  .step-phase {
+    font-size: 0.67rem; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--green); margin-bottom: 0.15rem;
+  }
+  .step-phase.li { color: var(--accent); }
+  .step-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .step-desc { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.9rem; line-height: 1.65; }
+  .step-desc strong { color: var(--text); }
+
+  /* ═══ CODE BLOCKS ════════════════════════════════════════════ */
+  .code-wrap {
+    background: var(--gh-dark);
+    border: 1px solid var(--gh-border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0.9rem;
+  }
+  .code-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid var(--gh-border);
+  }
+  .code-lang {
+    font-size: 0.69rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gh-muted); font-family: 'DM Mono', monospace;
+  }
+  .copy-btn {
+    font-size: 0.7rem; font-weight: 600;
+    color: var(--gh-muted); cursor: pointer;
+    background: var(--gh-dark);
+    border: 1px solid var(--gh-border);
+    border-radius: 5px;
+    padding: 0.22rem 0.65rem;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .copy-btn:hover { color: var(--gh-green); border-color: var(--gh-green); }
+  .copy-btn.done { color: var(--gh-green); border-color: var(--gh-green); }
+  pre {
+    padding: 1rem 1.2rem;
+    overflow-x: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+  .t-g { color: var(--gh-green); }
+  .t-b { color: var(--gh-blue); }
+  .t-y { color: #e3b341; }
+  .t-m { color: var(--gh-muted); }
+  .t-p { color: #f0883e; }
+  .t-w { color: var(--gh-text); }
+
+  /* ═══ ALERT BOXES ════════════════════════════════════════════ */
+  .alert {
+    border-radius: 8px; padding: 1rem 1.2rem;
+    font-size: 0.88rem; line-height: 1.65;
+    margin-bottom: 0.9rem;
+    display: flex; gap: 0.7rem; align-items: flex-start;
+  }
+  .alert-icon { flex-shrink: 0; margin-top: 0.05rem; }
+  .alert.tip { background: rgba(45,212,160,0.07); border: 1px solid rgba(45,212,160,0.22); color: #6ee7b7; }
+  .alert.info { background: rgba(79,142,247,0.07); border: 1px solid rgba(79,142,247,0.22); color: #93c5fd; }
+  .alert.warn { background: rgba(245,200,66,0.07); border: 1px solid rgba(245,200,66,0.22); color: #fde68a; }
+
+  /* ═══ FILE TREE ══════════════════════════════════════════════ */
+  .file-tree {
+    background: var(--gh-dark);
+    border: 1px solid var(--gh-border);
+    border-radius: 10px;
+    padding: 1.2rem 1.4rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.81rem;
+    line-height: 2.1;
+    margin-bottom: 0.9rem;
+  }
+  .ft-dir { color: var(--gh-blue); }
+  .ft-file { color: var(--gh-text); }
+  .ft-comment { color: var(--gh-muted); }
+  .ft-dash { color: var(--gh-muted); }
+
+  /* ═══ TOPIC TAGS ════════════════════════════════════════════ */
+  .topics {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-bottom: 0.9rem;
+  }
+  .topic {
+    background: rgba(79,142,247,0.08);
+    border: 1px solid rgba(79,142,247,0.2);
+    border-radius: 20px;
+    padding: 0.28rem 0.85rem;
+    font-size: 0.77rem; font-weight: 500;
+    color: #93c5fd; cursor: default;
+    transition: all 0.2s;
+  }
+  .topic:hover { background: rgba(79,142,247,0.15); border-color: var(--accent); }
+
+  /* ═══ LINKEDIN MOCK ═════════════════════════════════════════ */
+  .li-phone-wrap {
+    display: flex; justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .li-phone {
+    background: var(--li-dark);
+    border-radius: 18px;
+    width: 100%;
+    max-width: 520px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 24px 60px rgba(0,0,0,0.5);
+  }
+  .li-topbar {
+    background: #004b8d;
+    padding: 0.5rem 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .li-topbar-icon { font-size: 1.1rem; }
+  .li-topbar-text { font-size: 0.78rem; color: rgba(255,255,255,0.75); font-weight: 500; }
+  .li-post {
+    background: white;
+    margin: 0.5rem;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .li-header {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    padding: 0.9rem 1rem 0.5rem;
+  }
+  .li-avatar {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0a66c2, #004182);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .li-name { font-size: 0.88rem; font-weight: 700; color: #1a1a1a; }
+  .li-handle { font-size: 0.75rem; color: #555; }
+  .li-time { font-size: 0.71rem; color: #888; margin-top: 0.1rem; }
+  .li-banner {
+    width: 100%;
+    background: linear-gradient(135deg, #0f1117 0%, #1a2a4a 40%, #0a3060 100%);
+    padding: 1.4rem;
+    text-align: center;
+    border-top: 3px solid #f5c842;
+    border-bottom: 3px solid #f5c842;
+  }
+  .li-banner-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: #f5c842; letter-spacing: 0.05em; }
+  .li-banner-sub { font-size: 0.78rem; color: rgba(255,255,255,0.65); margin-top: 0.2rem; }
+  .li-banner-stats {
+    display: flex; justify-content: center; gap: 1.5rem; margin-top: 0.8rem;
+  }
+  .li-banner-stat { text-align: center; }
+  .li-banner-stat .val { font-size: 1.1rem; font-weight: 700; color: white; }
+  .li-banner-stat .lbl { font-size: 0.65rem; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; }
+  .li-text {
+    padding: 0.9rem 1rem;
+    font-size: 0.84rem; color: #1a1a1a;
+    line-height: 1.6; white-space: pre-wrap;
+  }
+  .li-text .hash { color: #0a66c2; font-weight: 500; }
+  .li-actions {
+    display: flex;
+    border-top: 1px solid #e0e0e0;
+  }
+  .li-act {
+    flex: 1; padding: 0.55rem;
+    font-size: 0.75rem; color: #555; font-weight: 600;
+    text-align: center; cursor: pointer;
+  }
+  .li-act:hover { background: #f3f2ef; }
+
+  /* ═══ POST COPY BOX ══════════════════════════════════════════ */
+  .post-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .post-box-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.7rem 1.3rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,102,194,0.08);
+  }
+  .post-box-label {
+    font-size: 0.69rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .post-box-text {
+    padding: 1.3rem;
+    font-size: 0.87rem; line-height: 1.78;
+    color: var(--text); white-space: pre-wrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ═══ STRATEGY CARDS ════════════════════════════════════════ */
+  .strategy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  @media (max-width: 640px) { .strategy-grid { grid-template-columns: 1fr; } }
+  .strategy-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.3rem;
+  }
+  .strategy-card-icon { font-size: 1.3rem; margin-bottom: 0.4rem; }
+  .strategy-card-title { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .strategy-card-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+  .strategy-card-desc strong { color: var(--text); }
+
+  /* ═══ CHECKLIST ════════════════════════════════════════════ */
+  .checklist { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .check-row {
+    display: flex; align-items: flex-start; gap: 0.8rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.8rem 1.1rem;
+    font-size: 0.86rem;
+  }
+  .check-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.05rem; }
+  .check-text { color: var(--text); }
+  .check-text small { display: block; color: var(--muted); font-size: 0.77rem; margin-top: 0.15rem; }
+
+  /* ═══ TIMING GRID ═══════════════════════════════════════════ */
+  .timing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-bottom: 1.2rem; }
+  @media (max-width: 500px) { .timing-grid { grid-template-columns: 1fr; } }
+  .timing-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+    text-align: center;
+  }
+  .timing-day { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.2rem; }
+  .timing-time { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .timing-badge { font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 20px; }
+  .badge-hot { background: rgba(244,99,125,0.12); color: var(--rose); border: 1px solid rgba(244,99,125,0.2); }
+  .badge-great { background: rgba(45,212,160,0.1); color: var(--green); border: 1px solid rgba(45,212,160,0.2); }
+  .badge-good { background: rgba(79,142,247,0.08); color: var(--accent); border: 1px solid rgba(79,142,247,0.15); }
+
+  /* ═══ FOOTER ════════════════════════════════════════════════ */
+  footer {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    padding: 2rem; text-align: center;
+    font-size: 0.8rem; color: var(--muted);
+  }
+  footer strong { color: var(--gold); }
+
+  /* ═══ ANIMATIONS ════════════════════════════════════════════ */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ══════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-inner">
+    <div class="hero-pill">🚀 Complete A–Z Pro Guide</div>
+    <h1 class="hero-title">
+      <span class="line1">GITHUB REPO</span>
+      <span class="line2">+ LINKEDIN</span>
+      <span class="line3">HR Analytics D&amp;I Dashboard</span>
+    </h1>
+    <p class="hero-sub">Everything you need to publish your Power BI project professionally — from zero to live repo to a LinkedIn post that gets noticed by recruiters and HR professionals.</p>
+    <div class="hero-chips">
+      <div class="chip"><span class="chip-icon">⬡</span> GitHub Setup</div>
+      <div class="chip"><span class="chip-icon">💼</span> LinkedIn Post</div>
+      <div class="chip"><span class="chip-icon">📄</span> README.md</div>
+      <div class="chip"><span class="chip-icon">🗂️</span> File Guide</div>
+      <div class="chip"><span class="chip-icon">⏰</span> Post Strategy</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NAV ══════════════════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-brand">HR D&amp;I · Pro Guide</div>
+  <a href="#github">⬡ GitHub</a>
+  <a href="#readme">📄 README</a>
+  <a href="#linkedin">💼 LinkedIn</a>
+  <a href="#strategy">🎯 Strategy</a>
+  <a href="#files">🗂️ Files</a>
+</nav>
+
+
+<!-- ═══ SECTION 1: GITHUB SETUP ══════════════════════════════════ -->
+<section id="github" class="section">
+  <div class="eyebrow">Part 01 · GitHub</div>
+  <h2 class="section-title">Create Your Repository — A to Z</h2>
+  <p class="section-desc">Follow every step below in order. Your repo will be live, professional, and discoverable within 15 minutes.</p>
+
+  <div class="steps">
+
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-orb gh">01</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-phase">Account Setup</div>
+        <div class="step-title">Sign Up or Log In to GitHub</div>
+        <div class="step-desc">Go to <strong>github.com</strong> → click <strong>Sign Up</strong>. Use a professional email. Choose a username like <code>yourname-data</code> or simply your real name — it will appear on every project you share.</div>
+        <div class="alert tip"><span class="alert-icon">💡</span> Match your GitHub username to your LinkedIn URL for maximum cross-platform discoverability.</div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-orb gh">02</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-phase">Create Repository</div>
+        <div class="step-title">New Repo — Exact Settings</div>
+        <div class="step-desc">Click the <strong>＋ icon</strong> → <strong>New repository</strong>. Use these exact values:</div>
+        <div class="code-wrap">
+          <div class="code-bar"><span class="code-lang">Repository Configuration</span></div>
+          <pre><span class="t-y">Repository name:</span>  <span class="t-g">hr-analytics-diversity-inclusion-powerbi</span>
+
+<span class="t-y">Description:</span>      <span class="t-b">📊 HR Gender Diversity & Inclusion KPI Dashboard built in Power BI
+                  — 6 KPIs, 3 pages, FY2020-21 workforce analysis of 500 employees</span>
+
+<span class="t-y">Visibility:</span>       <span class="t-g">✅ Public</span>  <span class="t-m">← required for recruiters & portfolio</span>
+
+<span class="t-y">Initialize with:</span>  <span class="t-g">✅ Add a README file</span>  <span class="t-m">← tick this box</span>
+<span class="t-y">Add .gitignore:</span>   <span class="t-m">None (skip)</span>
+<span class="t-y">License:</span>          <span class="t-m">MIT License  ← select this</span></pre>
+        </div>
+        <div class="step-desc">Click <strong style="color:var(--gh-green)">Create repository</strong>.</div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-orb gh">03</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-phase">README</div>
+        <div class="step-title">Replace the README with the Pro Version</div>
+        <div class="step-desc">In your new repo, click <strong>README.md</strong> → click the <strong>✏️ pencil icon</strong> (Edit this file). Select all the existing text and delete it. Paste the full content from the <strong>README.md file</strong> provided in this package. Scroll down → click <strong>Commit changes</strong> → <strong>Commit directly to the main branch</strong>.</div>
+        <div class="alert info"><span class="alert-icon">ℹ️</span> The README.md file includes all badges, tables, DAX code samples, filter guide, and strategic recommendations already formatted for GitHub Markdown.</div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-orb gh">04</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-phase">Upload Files</div>
+        <div class="step-title">Add All Project Files</div>
+        <div class="step-desc">In your repo, click <strong>Add file → Upload files</strong>. Drag and drop all files at once:</div>
+        <div class="file-tree">
+<span class="ft-dir">📁 Root directory (drag all these directly):</span>
+  <span class="ft-file">  ├── HR Diversity Inclusion Dashboard.pbix</span>   <span class="ft-comment">← the main Power BI file</span>
+  <span class="ft-file">  ├── HR Diversity Dashborad.png</span>              <span class="ft-comment">← overview dashboard screenshot</span>
+  <span class="ft-file">  ├── KPIs 1.png</span>                              <span class="ft-comment">← KPI page 1 screenshot</span>
+  <span class="ft-file">  └── KPIs 2.png</span>                              <span class="ft-comment">← KPI page 2 screenshot</span></div>
+        <div class="step-desc">Add commit message: <code>Add Power BI dashboard and screenshots</code> → click <strong>Commit changes</strong>.</div>
+        <div class="alert warn"><span class="alert-icon">⚠️</span> GitHub has a 25MB file size limit for web uploads. The .pbix file is ~123KB so it's well within limits. For future larger .pbix files, use GitHub Desktop or Git CLI.</div>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-orb gh">05</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-phase">Topics & Tags</div>
+        <div class="step-title">Add Repository Topics for Discoverability</div>
+        <div class="step-desc">On your repo homepage, click the <strong>⚙️ gear icon</strong> next to <strong>About</strong>. Add all topics below — they power GitHub search and make your project findable:</div>
+        <div class="topics">
+          <span class="topic">power-bi</span>
+          <span class="topic">hr-analytics</span>
+          <span class="topic">diversity-inclusion</span>
+          <span class="topic">data-visualization</span>
+          <span class="topic">business-intelligence</span>
+          <span class="topic">kpi-dashboard</span>
+          <span class="topic">gender-diversity</span>
+          <span class="topic">workforce-analytics</span>
+          <span class="topic">dax</span>
+          <span class="topic">microsoft-powerbi</span>
+          <span class="topic">portfolio-project</span>
+          <span class="topic">people-analytics</span>
+        </div>
+        <div class="step-desc">Also paste your website or LinkedIn URL in the <strong>Website</strong> field. Click <strong>Save changes</strong>.</div>
+      </div>
+    </div>
+
+    <!-- Step 6 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-orb gh">06</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-phase">Profile</div>
+        <div class="step-title">Pin the Repo to Your GitHub Profile</div>
+        <div class="step-desc">Go to your <strong>GitHub profile page</strong> (github.com/yourusername). Click <strong>Customize your pins</strong>. Check <code>hr-analytics-diversity-inclusion-powerbi</code> → Save. This makes it the first thing any recruiter, hiring manager, or collaborator sees.</div>
+        <div class="alert tip"><span class="alert-icon">💡</span> Pin your 4–6 best projects. A pinned Power BI + a Python project + a SQL project = a well-rounded data analyst portfolio signal.</div>
+      </div>
+    </div>
+
+    <!-- Step 7 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-orb gh">07</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-phase">Profile README</div>
+        <div class="step-title">Level Up — Add a GitHub Profile README</div>
+        <div class="step-desc">Create a special repo named exactly your GitHub username (e.g., <code>yourusername/yourusername</code>). The README in that repo becomes your profile homepage. Use this snippet:</div>
+        <div class="code-wrap">
+          <div class="code-bar"><span class="code-lang">GitHub Profile README Snippet</span><button class="copy-btn" onclick="copyCode(this, 'profile-code')">Copy</button></div>
+          <pre id="profile-code"><span class="t-b">## 👋 Hi, I'm [Your Name]</span>
+
+<span class="t-g">Data Analyst</span> | Power BI · Excel · SQL · Python
+
+<span class="t-y">🔭 Latest Project:</span> <span class="t-b">[HR Analytics — Diversity & Inclusion KPI Dashboard]</span>
+<span class="t-m">   → 500 employees · 6 KPI modules · Power BI dashboard
+   → Key finding: Women rate 2.42, men 2.41 — yet men get 70% of promotions</span>
+
+<span class="t-y">📊 Core Skills:</span> DAX · Power Query · Data Modelling · HR Analytics · BI Reporting
+<span class="t-y">🌍 Speciality:</span>   People Analytics · Workforce Intelligence · D&I Metrics</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 8 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-orb gh">08</div>
+      </div>
+      <div class="step-body">
+        <div class="step-phase">✅ Live!</div>
+        <div class="step-title">Your Repo is Live — Copy the URL</div>
+        <div class="code-wrap">
+          <div class="code-bar"><span class="code-lang">Your Live Repository URL</span></div>
+          <pre><span class="t-g">https://github.com/</span><span class="t-y">YOUR-USERNAME</span><span class="t-g">/hr-analytics-diversity-inclusion-powerbi</span></pre>
+        </div>
+        <div class="alert tip"><span class="alert-icon">✅</span> Copy this URL — you need it for your LinkedIn post, your resume Projects section, and your email signature.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 2: README PREVIEW ════════════════════════════════ -->
+<section id="readme" class="section">
+  <div class="eyebrow gold">Part 02 · README</div>
+  <h2 class="section-title">What's in Your Professional README</h2>
+  <p class="section-desc">The README.md file provided in this package is production-grade. Here's exactly what makes it stand out from generic READMEs.</p>
+
+  <div class="checklist">
+    <div class="check-row">
+      <span class="check-icon">🏅</span>
+      <div class="check-text"><strong>3 Status Badges</strong> — Power BI, Excel, Status (Completed), and MIT License badges render visually at the top
+      <small>Badges signal professionalism instantly. Most junior portfolios skip these.</small></div>
+    </div>
+    <div class="check-row">
+      <span class="check-icon">💬</span>
+      <div class="check-text"><strong>Powerful Opening Quote</strong> — "Women rate 2.42. Men rate 2.41. Yet men receive 70% of all promotions." is the first thing people read
+      <small>This creates curiosity and shows you understood the data, not just built visuals.</small></div>
+    </div>
+    <div class="check-row">
+      <span class="check-icon">🖼️</span>
+      <div class="check-text"><strong>All 3 Dashboard Screenshots Embedded</strong> — Hiring/Promotions/Turnover, Performance/Executive/Age, and Overview pages shown inline
+      <small>Visuals in README get 4× more stars than text-only repositories.</small></div>
+    </div>
+    <div class="check-row">
+      <span class="check-icon">💻</span>
+      <div class="check-text"><strong>Real DAX Code Samples</strong> — % Female Hires, Avg Performance Rating, Turnover Rate, and % Female Promoters measures shown with syntax
+      <small>Code in README proves technical depth. It separates analysts from click-and-drag users.</small></div>
+    </div>
+    <div class="check-row">
+      <span class="check-icon">📋</span>
+      <div class="check-text"><strong>KPI Summary Table</strong> — All 6 KPIs with chart type and key metric in a clean table
+      <small>Recruiters scan, they don't read. Tables communicate faster than paragraphs.</small></div>
+    </div>
+    <div class="check-row">
+      <span class="check-icon">🎯</span>
+      <div class="check-text"><strong>The Critical Discovery Section</strong> — Four-line code block showing the Performance vs Promotion paradox visually
+      <small>This is the section that makes people share the project.</small></div>
+    </div>
+    <div class="check-row">
+      <span class="check-icon">🏭</span>
+      <div class="check-text"><strong>Industry Applicability Table</strong> — Shows the dashboard applies to Finance, Tech, Healthcare, Retail, Manufacturing
+      <small>Demonstrates you understand transferable value, not just the specific project.</small></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 3: LINKEDIN POST ═════════════════════════════════ -->
+<section id="linkedin" class="section">
+  <div class="eyebrow blue">Part 03 · LinkedIn</div>
+  <h2 class="section-title">The Post That Gets Noticed</h2>
+  <p class="section-desc">A post engineered for the LinkedIn algorithm — strong hook, specific data, story arc, strategic hashtags, and an engagement trigger at the end.</p>
+
+  <!-- PHONE MOCKUP PREVIEW -->
+  <div class="li-phone-wrap">
+    <div class="li-phone">
+      <div class="li-topbar">
+        <span class="li-topbar-icon">💼</span>
+        <span class="li-topbar-text">LinkedIn Feed</span>
+      </div>
+      <div class="li-post">
+        <div class="li-header">
+          <div class="li-avatar">👤</div>
+          <div>
+            <div class="li-name">[Your Name]</div>
+            <div class="li-handle">Data Analyst | Power BI · Excel · SQL</div>
+            <div class="li-time">Just now · 🌐</div>
+          </div>
+        </div>
+        <div class="li-banner">
+          <div class="li-banner-title">📊 HR Analytics · D&amp;I Dashboard</div>
+          <div class="li-banner-sub">Power BI · FY2020–2021 · 500 Employees · 6 KPI Modules</div>
+          <div class="li-banner-stats">
+            <div class="li-banner-stat"><div class="val">500</div><div class="lbl">Employees</div></div>
+            <div class="li-banner-stat"><div class="val">2.42</div><div class="lbl">Women Avg</div></div>
+            <div class="li-banner-stat"><div class="val">70%</div><div class="lbl">Male Promo</div></div>
+            <div class="li-banner-stat"><div class="val">0%</div><div class="lbl">Female Exec</div></div>
+          </div>
+        </div>
+        <div class="li-text">📊 I just completed an HR Analytics Diversity & Inclusion Dashboard in Power BI — and the data revealed something that stopped me cold.
+
+<b>Here's what the numbers say 👇</b>
+
+<b>1️⃣ Women perform identically to men</b>
+Avg performance rating: Women 2.42 · Men 2.41
+Statistically, they are the same. Equal talent. Equal output.
+
+<b>2️⃣ Yet men receive 70% of all promotions</b>
+In both FY2020 and FY2021 — the same 59:41 split.
+This isn't a one-off. It's a pattern.
+
+<b>3️⃣ The executive pipeline is functionally closed to women</b>
+0% female executive appointments in FY20.
+0% female promotions to Executive in FY21.
+The current trajectory points to 0% female executives within a decade.
+
+<b>4️⃣ But the talent is there</b>
+53% of Junior Officer hires are female.
+The pipeline starts healthy. It breaks somewhere in the middle.
+
+<b>5️⃣ A young workforce means the window is now</b>
+215 employees are aged 20–29 — the largest cohort.
+What decisions get made about them in the next 5 years will define this org's leadership for 20.
+
+<b>🔧 What I built:</b>
+→ 3-page interactive Power BI dashboard
+→ 6 fully developed KPI modules with DAX measures
+→ Dynamic slicers: Age · Region · Job Level · Department
+→ Covers 500 employees across FY2020–FY2021
+
+<b>📈 The insight that changed how I think about D&I data:</b>
+This isn't a talent problem.
+It's a <i>fairness</i> problem.
+And the difference matters enormously — because talent problems need recruitment solutions, but fairness problems need structural ones.
+
+🔗 Full project on GitHub: [YOUR GITHUB LINK HERE]
+
+Drop a 💬 below if you work in HR, People Analytics, or BI — I'd love to connect with others working on workforce intelligence.
+
+<span class="hash">#PowerBI</span> <span class="hash">#HRAnalytics</span> <span class="hash">#DataAnalytics</span> <span class="hash">#DiversityAndInclusion</span> <span class="hash">#PeopleAnalytics</span> <span class="hash">#BusinessIntelligence</span> <span class="hash">#WorkforceAnalytics</span> <span class="hash">#DataVisualization</span> <span class="hash">#PortfolioProject</span> <span class="hash">#DAX</span></div>
+        <div class="li-actions">
+          <div class="li-act">👍 Like</div>
+          <div class="li-act">💬 Comment</div>
+          <div class="li-act">🔁 Repost</div>
+          <div class="li-act">📤 Send</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COPY BOX -->
+  <div class="post-box">
+    <div class="post-box-bar">
+      <span class="post-box-label">📋 LinkedIn Post · Full Copy-Paste Version</span>
+      <button class="copy-btn" onclick="copyPost(this)" style="font-size:0.75rem;padding:0.3rem 0.85rem;">Copy Post</button>
+    </div>
+    <div class="post-box-text" id="li-post-text">📊 I just completed an HR Analytics Diversity & Inclusion Dashboard in Power BI — and the data revealed something that stopped me cold.
+
+Here's what the numbers say 👇
+
+1️⃣ Women perform identically to men
+Avg performance rating: Women 2.42 · Men 2.41
+Statistically, they are the same. Equal talent. Equal output.
+
+2️⃣ Yet men receive 70% of all promotions
+In both FY2020 and FY2021 — the same 59:41 split.
+This isn't a one-off. It's a pattern.
+
+3️⃣ The executive pipeline is functionally closed to women
+0% female executive appointments in FY20.
+0% female promotions to Executive in FY21.
+The current trajectory points to 0% female executives within a decade.
+
+4️⃣ But the talent is there
+53% of Junior Officer hires are female.
+The pipeline starts healthy. It breaks somewhere in the middle.
+
+5️⃣ A young workforce means the window is now
+215 employees are aged 20–29 — the largest cohort.
+What decisions get made about them in the next 5 years will define this org's leadership for 20.
+
+🔧 What I built:
+→ 3-page interactive Power BI dashboard
+→ 6 fully developed KPI modules with DAX measures
+→ Dynamic slicers: Age · Region · Job Level · Department
+→ Covers 500 employees across FY2020–FY2021
+
+📈 The insight that changed how I think about D&I data:
+This isn't a talent problem.
+It's a fairness problem.
+And the difference matters enormously — because talent problems need recruitment solutions, but fairness problems need structural ones.
+
+🔗 Full project on GitHub: [PASTE YOUR GITHUB LINK HERE]
+
+Drop a 💬 below if you work in HR, People Analytics, or BI — I'd love to connect with others working on workforce intelligence.
+
+#PowerBI #HRAnalytics #DataAnalytics #DiversityAndInclusion #PeopleAnalytics #BusinessIntelligence #WorkforceAnalytics #DataVisualization #PortfolioProject #DAX</div>
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 4: POST STRATEGY ══════════════════════════════════ -->
+<section id="strategy" class="section">
+  <div class="eyebrow rose">Part 04 · Post Strategy</div>
+  <h2 class="section-title">Why This Post Works — The Science Behind It</h2>
+  <p class="section-desc">Every element of this post is engineered with a specific purpose. Here's the breakdown.</p>
+
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <div class="strategy-card-icon">🪝</div>
+      <div class="strategy-card-title">The Hook: "stopped me cold"</div>
+      <div class="strategy-card-desc">LinkedIn hides everything after line 3. The phrase <strong>"stopped me cold"</strong> creates an emotional gap that makes people click "see more." Curiosity is the algorithm's best friend. Never open with "I'm excited to share."</div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-card-icon">🔢</div>
+      <div class="strategy-card-title">Specific Numbers Throughout</div>
+      <div class="strategy-card-desc">2.42 vs 2.41, 70%, 0%, 215, 500 — <strong>every claim has a specific number.</strong> Vague posts get 3× fewer shares than posts with concrete data. Numbers signal expertise, not opinion.</div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-card-icon">📖</div>
+      <div class="strategy-card-title">Story Arc with a Twist</div>
+      <div class="strategy-card-desc">The post builds tension: <strong>equal performance → unequal outcomes → zero exec appointments → but the talent exists → young workforce = window is now.</strong> This is a classic 5-act structure in 400 words.</div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-card-icon">💡</div>
+      <div class="strategy-card-title">The Insight Closer</div>
+      <div class="strategy-card-desc">"This isn't a talent problem — it's a <strong>fairness problem.</strong>" This is a reframe that makes HR professionals and leaders want to share the post. It's not a conclusion, it's a provocation.</div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-card-icon">🔗</div>
+      <div class="strategy-card-title">GitHub Link Placed Late</div>
+      <div class="strategy-card-desc">LinkedIn's algorithm penalises external links at the top of posts. The GitHub link is placed <strong>after the value,</strong> not before. Pro tip: post the link in the first comment instead for even better reach.</div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-card-icon">💬</div>
+      <div class="strategy-card-title">Targeted Engagement Ask</div>
+      <div class="strategy-card-desc">"Drop a 💬 if you work in HR, People Analytics, or BI" is <strong>specific audience targeting.</strong> Specific asks get more comments than generic "thoughts?" The emoji signals warmth, not formality.</div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-card-icon">#️⃣</div>
+      <div class="strategy-card-title">10 Precision Hashtags</div>
+      <div class="strategy-card-desc">Mix of high-volume (#DataAnalytics, #PowerBI) and niche (#PeopleAnalytics, #WorkforceAnalytics). <strong>10 hashtags</strong> is optimal — more looks like spam, fewer limits discovery. No generic (#life, #growth) tags.</div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-card-icon">📊</div>
+      <div class="strategy-card-title">Business Language, Not Tech Language</div>
+      <div class="strategy-card-desc">"Fairness problem" not "bias in the dataset." "Executive pipeline" not "executive-level KPI." <strong>Business decision-makers</strong> read LinkedIn, not data scientists. Write for the people who hire.</div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Lora',serif;font-size:1.3rem;font-weight:700;margin-bottom:1rem;">⏰ Best Times to Post</h3>
+  <div class="timing-grid">
+    <div class="timing-card">
+      <div class="timing-day">Tuesday</div>
+      <div class="timing-time">8:00 – 10:00 AM</div>
+      <div class="timing-badge badge-hot">🔥 Best</div>
+    </div>
+    <div class="timing-card">
+      <div class="timing-day">Wednesday</div>
+      <div class="timing-time">11:00 AM – 1:00 PM</div>
+      <div class="timing-badge badge-great">✅ Great</div>
+    </div>
+    <div class="timing-card">
+      <div class="timing-day">Thursday</div>
+      <div class="timing-time">5:00 – 7:00 PM</div>
+      <div class="timing-badge badge-good">👍 Good</div>
+    </div>
+  </div>
+
+  <div class="alert warn">
+    <span class="alert-icon">⚠️</span>
+    <div><strong>Critical first 60 minutes:</strong> The LinkedIn algorithm judges a post's quality by engagement in the first hour. Stay near your phone after posting and respond to every comment within 15 minutes. Early engagement = algorithm boost = more impressions. Don't post and disappear.</div>
+  </div>
+
+  <div class="alert tip">
+    <span class="alert-icon">💡</span>
+    <div><strong>Power move:</strong> Before posting, comment on 5 posts by HR professionals, Data Analysts, or Power BI creators in your feed. This warms the algorithm and puts you in their notification feed right before your post goes live.</div>
+  </div>
+</section>
+
+
+<!-- ═══ SECTION 5: FILES ══════════════════════════════════════════ -->
+<section id="files" class="section">
+  <div class="eyebrow">Part 05 · File Guide</div>
+  <h2 class="section-title">Complete File Package — What to Do With Each</h2>
+  <p class="section-desc">Every file in this documentation package and exactly where it goes.</p>
+
+  <div class="checklist">
+    <div class="check-row">
+      <span class="check-icon">📊</span>
+      <div class="check-text"><strong>HR Diversity Inclusion Dashboard.pbix</strong> — The main Power BI file. Upload to GitHub root directory. This is the primary deliverable — every recruiter will download this.
+      <small>Size: 123KB. Well within GitHub's 25MB limit.</small></div>
+    </div>
+    <div class="check-row">
+      <span class="check-icon">🖼️</span>
+      <div class="check-text"><strong>HR Diversity Dashborad.png · KPIs 1.png · KPIs 2.png</strong> — Dashboard screenshots. Upload to GitHub root. The README references these directly by filename — so keep the exact filenames.
+      <small>These render inline in the README — critical for GitHub profile visual impact.</small></div>
+    </div>
+    <div class="check-row">
+      <span class="check-icon">📄</span>
+      <div class="check-text"><strong>README.md</strong> — The professional repo description provided in this package. Paste into GitHub's README editor and commit.
+      <small>This is what every visitor reads first. It determines whether they star, download, or leave.</small></div>
+    </div>
+    <div class="check-row">
+      <span class="check-icon">📋</span>
+      <div class="check-text"><strong>HR_Analytics_Documentation_Package.html</strong> — The full stakeholder documentation. You can upload this to GitHub in a docs/ folder, or host it separately via GitHub Pages.
+      <small>Linking to this documentation from your README adds serious professional depth.</small></div>
+    </div>
+    <div class="check-row">
+      <span class="check-icon">📜</span>
+      <div class="check-text"><strong>LICENSE</strong> — Already included in your ZIP. Keep it in the GitHub root. MIT License signals openness and is expected for portfolio projects.
+      <small>Projects without a LICENSE file are legally ambiguous. Always include one.</small></div>
+    </div>
+  </div>
+
+  <div class="alert info">
+    <span class="alert-icon">🔗</span>
+    <div><strong>After going live — update these 3 places with your GitHub URL:</strong> (1) LinkedIn profile → Featured section → Add a link. (2) Your CV/resume → Projects section. (3) Your email signature. Three touchpoints = maximum visibility for every application and connection.</div>
+  </div>
+</section>
+
+
+<footer>
+  <p><strong>HR Analytics D&I Dashboard</strong> · GitHub + LinkedIn Pro Guide</p>
+  <p style="margin-top:0.4rem;">Power BI · FY2020–2021 · 500 Employees · 6 KPI Modules · 3 Dashboard Pages</p>
+</footer>
+
+<script>
+function copyPost(btn) {
+  const text = document.getElementById('li-post-text').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('done');
+    setTimeout(() => { btn.textContent = 'Copy Post'; btn.classList.remove('done'); }, 2800);
+  });
+}
+
+function copyCode(btn, id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const text = el.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('done');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 2500);
+  });
+}
+
+// Nav active state on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = '';
+    a.style.borderBottomColor = '';
+    if (a.getAttribute('href') === '#' + current) {
+      a.style.color = 'var(--text)';
+      a.style.borderBottomColor = 'var(--accent)';
+    }
+  });
+});
+</script>
+
+</body>
+</html>
